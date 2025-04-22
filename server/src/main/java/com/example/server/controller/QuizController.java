@@ -3,8 +3,11 @@ package com.example.server.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.server.dto.GetAllQuizzesDto;
 import com.example.server.entity.Quiz;
 import com.example.server.service.QuizService;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.UUID;
@@ -26,7 +29,7 @@ public class QuizController {
     }
 
     @GetMapping("/")
-    public List<Quiz> getQuizzes() {
+    public List<GetAllQuizzesDto> getQuizzes() {
         return quizService.getAllQuizzes();
     }
 
@@ -36,7 +39,7 @@ public class QuizController {
     }
 
     @PostMapping("/")
-    public Quiz createQuiz(@RequestBody Quiz quiz) {
+    public Quiz createQuiz(@Valid @RequestBody Quiz quiz) {
         return quizService.createQuiz(quiz);
     }
 

@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.example.server.dto.GetAllQuizzesDto;
 import com.example.server.entity.Quiz;
+import com.example.server.exception.ApiRequestException;
 import com.example.server.repository.QuizRepository;
 
 @Service
@@ -17,13 +19,15 @@ public class QuizService {
         this.quizRepository = quizRepository;
     }
 
-    public List<Quiz> getAllQuizzes() {
-        return quizRepository.findAll();
+    public List<GetAllQuizzesDto> getAllQuizzes() {
+        List<Quiz> quizzes = quizRepository.findAll();
+
+        return quizzes.stream().map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle())).toList();
     }
 
     public Quiz getQuizById(UUID id) {
         return quizRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Quiz with id:" + id + " , not found"));
+                .orElseThrow(() -> new ApiRequestException("Quiz with id: " + id + " not found"));
     }
 
     public Quiz createQuiz(Quiz quiz) {
@@ -31,7 +35,8 @@ public class QuizService {
     }
 
     public Quiz deleteQuizById(UUID id) {
-        Quiz quiz = quizRepository.findById(id).orElseThrow(() -> new RuntimeException("Quiz with that id not found!"));
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Quiz with id: " + id + " not found"));
         quizRepository.deleteById(id);
         return quiz;
     }
