@@ -1,5 +1,7 @@
 package com.example.server.service;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.example.server.dto.CreateQustionDto;
@@ -18,6 +20,12 @@ public class QuestionService {
     public QuestionService(QuestionRepository questionRepository, QuizRepository quizRepository) {
         this.questionRepository = questionRepository;
         this.quizRepository = quizRepository;
+    }
+
+    public Question getQuestion(UUID id) {
+        return questionRepository.findById(id)
+                .orElseThrow(() -> new ApiRequestException("Question with that id not found"));
+
     }
 
     public Question createQuestion(CreateQustionDto createQustionDto) {
