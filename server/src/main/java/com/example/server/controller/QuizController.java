@@ -3,6 +3,7 @@ package com.example.server.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.server.dto.CreateQuizDto;
 import com.example.server.dto.GetAllQuizzesDto;
 import com.example.server.entity.Quiz;
 import com.example.server.service.QuizService;
@@ -39,8 +40,8 @@ public class QuizController {
     }
 
     @PostMapping("/")
-    public Quiz createQuiz(@Valid @RequestBody Quiz quiz) {
-        return quizService.createQuiz(quiz);
+    public CreateQuizDto createQuiz(@Valid @RequestBody CreateQuizDto createQuizDto) {
+        return quizService.createQuiz(createQuizDto);
     }
 
     @DeleteMapping("/{id}")

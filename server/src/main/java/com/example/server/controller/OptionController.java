@@ -9,11 +9,15 @@ import com.example.server.service.OptionService;
 
 import jakarta.validation.Valid;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/api/options/")
+@RequestMapping("/api/questions/")
 public class OptionController {
 
     private final OptionService optionService;
@@ -22,9 +26,9 @@ public class OptionController {
         this.optionService = optionService;
     }
 
-    @PostMapping(path = "/")
-    public Option createOption(@Valid @RequestBody CreateOptionDto createOptionDto) {
-        return optionService.createOption(createOptionDto);
+    @PostMapping(path = "/{id}/options")
+    public List<Option> createOption(@PathVariable UUID id, @Valid @RequestBody List<CreateOptionDto> createOptionDto) {
+        return optionService.createOption(id, createOptionDto);
     }
 
 }

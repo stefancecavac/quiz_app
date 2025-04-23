@@ -32,7 +32,7 @@ public class QuestionController {
     }
 
     @PostMapping("/")
-    public Question createQuestion(@Valid @RequestBody CreateQustionDto createQustionDto) {
+    public CreateQustionDto createQuestion(@Valid @RequestBody CreateQustionDto createQustionDto) {
         return questionService.createQuestion(createQustionDto);
     }
 

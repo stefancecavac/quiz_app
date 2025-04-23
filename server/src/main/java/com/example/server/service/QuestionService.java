@@ -28,14 +28,15 @@ public class QuestionService {
 
     }
 
-    public Question createQuestion(CreateQustionDto createQustionDto) {
+    public CreateQustionDto createQuestion(CreateQustionDto createQustionDto) {
         Quiz quiz = quizRepository.findById(createQustionDto.getQuizId())
                 .orElseThrow(() -> new ApiRequestException("Quiz whith that id not found"));
 
         Question question = new Question();
         question.setContent(createQustionDto.getContent());
         question.setQuiz(quiz);
+        questionRepository.save(question);
 
-        return questionRepository.save(question);
+        return createQustionDto;
     }
 }

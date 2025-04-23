@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
+import com.example.server.dto.CreateQuizDto;
 import com.example.server.dto.GetAllQuizzesDto;
 import com.example.server.entity.Quiz;
 import com.example.server.exception.ApiRequestException;
@@ -21,7 +22,6 @@ public class QuizService {
 
     public List<GetAllQuizzesDto> getAllQuizzes() {
         List<Quiz> quizzes = quizRepository.findAll();
-
         return quizzes.stream().map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle())).toList();
     }
 
@@ -30,8 +30,12 @@ public class QuizService {
                 .orElseThrow(() -> new ApiRequestException("Quiz with id: " + id + " not found"));
     }
 
-    public Quiz createQuiz(Quiz quiz) {
-        return quizRepository.save(quiz);
+    public CreateQuizDto createQuiz(CreateQuizDto createQuizDto) {
+        Quiz quiz = new Quiz();
+        quiz.setTitle(createQuizDto.getTitle());
+        quizRepository.save(quiz);
+
+        return createQuizDto;
     }
 
     public Quiz deleteQuizById(UUID id) {

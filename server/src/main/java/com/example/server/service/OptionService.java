@@ -1,5 +1,8 @@
 package com.example.server.service;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import com.example.server.dto.CreateOptionDto;
@@ -20,16 +23,33 @@ public class OptionService {
         this.questionRepository = questionRepository;
     }
 
-    public Option createOption(CreateOptionDto createOptionDto) {
-        Question question = questionRepository.findById(createOptionDto.getQuestionId())
+    public List<Option> createOption(UUID id, List<CreateOptionDto> createOptionDtoList) {
+        Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new ApiRequestException("Question with that id not found"));
-        Option option = new Option();
 
-        option.setContent(createOptionDto.getContent());
-        option.setQuestion(question);
-        option.setIsCorrect(createOptionDto.getIsCorrect());
+        int existingcount = question.getOptions() != null ? question.getOptions().size() : 0;
+        if (createOptionDtoList.size() < 3) {
+            throw new ApiRequestException("Each question must have 3 options");
+        }
+        if (existingcount >= 3) {
+            throw new ApiRequestException("Each question must have 3 options");
+        }
 
-        return optionRepository.save(option);
+        Long correctCount = createOptionDtoList.stream().filter(dto -> Boolean.TRUE.equals(dto.getIsCorrect())).count();
+
+        if (correctCount != 1) {
+            throw new ApiRequestException("Question must have only 1 correct option");
+        }
+
+        List<Option> options = createOptionDtoList.stream().map(dto -> {
+            Option option = new Option();
+            option.setContent(dto.getContent());
+            option.setQuestion(question);
+            option.setIsCorrect(dto.getIsCorrect());
+            return option;
+        }).toList();
+
+        return optionRepository.saveAll(options);
 
     }
 
