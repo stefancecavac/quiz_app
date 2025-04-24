@@ -1,49 +1,58 @@
+import { NavLink } from "react-router";
+import { HomeIcon } from "../ui/icons/HomeIcon";
+import { LeaderBoardIcon } from "../ui/icons/LeaderBoardIcon";
+import { ShopIcon } from "../ui/icons/ShopIcon";
+import { ProfileIcon } from "../ui/icons/ProfileIcon";
+
 export const Navbar = () => {
   return (
     <div className="w-80 border-r-2 border-zinc-200 shadow-lg p-2">
       <h1 className="text-primary font-medium text-3xl m-2 tracking-wide text-shadow-primary/10 text-shadow-lg  ">Quiz app</h1>
 
-      <div className="flex flex-col gap-3 mt-10">
-        <button className="p-3 flex items-center border-2 border-secondary/30 bg-secondary/20 gap-5 rounded-2xl text-start transition-all hover:bg-info-content/10 text-info-content font-medium text-xl">
-          <svg
-            className="size-8"
-            version="1.1"
-            id="Layer_1"
-            xmlns="http://www.w3.org/2000/svg"
-            xmlnsXlink="http://www.w3.org/1999/xlink"
-            viewBox="0 0 511.996 511.996"
-            xmlSpace="preserve"
-            fill="#000000"
-          >
-            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-            <g id="SVGRepo_iconCarrier">
-              <path
-                style={{ fill: "#FFCB5B" }}
-                d="M432.015,511.996H80.301c-8.833,0-15.987-7.154-15.987-15.987V224.23L256.158,40.379L448.002,224.23 v271.779C448.002,504.834,440.84,511.996,432.015,511.996z"
-              ></path>
-              <g>
-                <path
-                  style={{ fill: "#F6B545" }}
-                  d="M256.158,40.379L64.314,224.23c-0.032,11.431,9.209,20.727,20.647,20.759 c5.508,0.016,10.791-2.166,14.684-6.051L201.962,137.82c30.056-29.712,78.416-29.712,108.472,0l88.728,87.929 c15.867,15.699,24.812,37.074,24.86,59.392v186.888c0,8.833-7.154,15.987-15.987,15.987l0,0c-13.245,0-23.98,10.735-23.98,23.981 h47.961c8.833,0,15.987-7.154,15.987-15.987V224.23L256.158,40.379z"
-                ></path>
-                <rect x="176.255" y="304.149" style={{ fill: "#F6B545" }} width="159.87" height="207.831"></rect>
-              </g>
-              <rect x="192.242" y="320.136" style={{ fill: "#92582B" }} width="127.896" height="191.844"></rect>
-              <circle style={{ fill: "#50BEE8" }} cx="256.19" cy="200.233" r="31.974"></circle>
-              <path
-                style={{ fill: "#92582B" }}
-                d="M256.158,248.21c-26.49,0-47.961-21.471-47.961-47.961s21.471-47.961,47.961-47.961 s47.961,21.471,47.961,47.961S282.648,248.21,256.158,248.21z M256.158,168.275c-17.658,0-31.974,14.316-31.974,31.974 s14.316,31.974,31.974,31.974s31.974-14.316,31.974-31.974S273.816,168.275,256.158,168.275z"
-              ></path>
-              <path
-                style={{ fill: "#DE333F" }}
-                d="M256.158,60.283L62.555,251.648c-6.219,6.091-16.163,6.091-22.382,0l-11.191-11.431 c-5.939-6.187-5.939-15.955,0-22.142L244.807,4.568c6.219-6.091,16.163-6.091,22.382,0l215.825,213.507 c5.939,6.187,5.939,15.955,0,22.142l-11.031,11.431c-6.219,6.091-16.163,6.091-22.382,0L256.158,60.283"
-              ></path>
-              <circle style={{ fill: "#CAD1D8" }} cx="296.157" cy="424.051" r="7.994"></circle>
-            </g>
-          </svg>
-          Home
-        </button>
+      <div className="flex flex-col gap-3 mt-10 px-2">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `p-3 pl-5 flex items-center  text-base-content/70 border-2 border-base-100  gap-5 rounded-2xl text-start transition-all font-medium 
+     ${isActive ? "border-secondary/30 bg-secondary/10 text-secondary" : " hover:bg-info-content/10"}`
+          }
+        >
+          <HomeIcon />
+          HOME
+        </NavLink>
+
+        <NavLink
+          to="/leader-board"
+          className={({ isActive }) =>
+            `p-3 pl-5 flex items-center  text-base-content/70 border-2 border-base-100  gap-5 rounded-2xl text-start transition-all font-medium 
+     ${isActive ? "border-secondary/30 bg-secondary/10 text-secondary" : " hover:bg-info-content/10"}`
+          }
+        >
+          <LeaderBoardIcon />
+          LEADERBOARDS
+        </NavLink>
+
+        <NavLink
+          to="/shop"
+          className={({ isActive }) =>
+            `p-3 pl-5 flex items-center  text-base-content/70 border-2 border-base-100  gap-5 rounded-2xl text-start transition-all font-medium 
+     ${isActive ? "border-secondary/30 bg-secondary/10 text-secondary" : " hover:bg-info-content/10"}`
+          }
+        >
+          <ShopIcon />
+          SHOP
+        </NavLink>
+
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            `p-3 pl-5 flex items-center  text-base-content/70 border-2 border-base-100  gap-5 rounded-2xl text-start transition-all font-medium 
+     ${isActive ? "border-secondary/30 bg-secondary/10 text-secondary" : " hover:bg-info-content/10"}`
+          }
+        >
+          <ProfileIcon />
+          PROFILE
+        </NavLink>
       </div>
     </div>
   );
