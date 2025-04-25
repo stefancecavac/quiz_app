@@ -13,6 +13,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,22 +31,27 @@ public class QuizController {
     }
 
     @GetMapping("/")
-    public List<GetAllQuizzesDto> getQuizzes() {
-        return quizService.getAllQuizzes();
+    public ResponseEntity<List<GetAllQuizzesDto>> getQuizzes() {
+        List<GetAllQuizzesDto> quizzes = quizService.getAllQuizzes();
+        return ResponseEntity.ok(quizzes);
+
     }
 
     @GetMapping("/{id}")
-    public Quiz getSingleQuiz(@PathVariable UUID id) {
-        return quizService.getQuizById(id);
+    public ResponseEntity<Quiz> getSingleQuiz(@PathVariable UUID id) {
+        Quiz quiz = quizService.getQuizById(id);
+        return ResponseEntity.ok(quiz);
     }
 
     @PostMapping("/")
-    public CreateQuizDto createQuiz(@Valid @RequestBody CreateQuizDto createQuizDto) {
-        return quizService.createQuiz(createQuizDto);
+    public ResponseEntity<CreateQuizDto> createQuiz(@Valid @RequestBody CreateQuizDto createQuizDto) {
+        CreateQuizDto createdQuiz = quizService.createQuiz(createQuizDto);
+        return ResponseEntity.ok(createdQuiz);
     }
 
     @DeleteMapping("/{id}")
-    public Quiz createQuiz(@PathVariable UUID id) {
-        return quizService.deleteQuizById(id);
+    public ResponseEntity<Quiz> deleteQuiz(@PathVariable UUID id) {
+        Quiz deletedQuiz = quizService.deleteQuizById(id);
+        return ResponseEntity.ok(deletedQuiz);
     }
 }

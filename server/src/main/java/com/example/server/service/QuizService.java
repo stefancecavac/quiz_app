@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.example.server.dto.CreateQuizDto;
 import com.example.server.dto.GetAllQuizzesDto;
 import com.example.server.entity.Quiz;
-import com.example.server.exception.ApiRequestException;
 import com.example.server.repository.QuizRepository;
 
 @Service
@@ -27,7 +26,7 @@ public class QuizService {
 
     public Quiz getQuizById(UUID id) {
         return quizRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Quiz with id: " + id + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Quiz with id: " + id + " not found"));
     }
 
     public CreateQuizDto createQuiz(CreateQuizDto createQuizDto) {
@@ -40,7 +39,7 @@ public class QuizService {
 
     public Quiz deleteQuizById(UUID id) {
         Quiz quiz = quizRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Quiz with id: " + id + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Quiz with id: " + id + " not found"));
         quizRepository.deleteById(id);
         return quiz;
     }

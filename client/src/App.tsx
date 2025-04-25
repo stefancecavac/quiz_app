@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { Layout } from "./components/layout/Layout";
+import { HomePage } from "./pages/HomePage";
 
 function App() {
   document.documentElement.setAttribute("data-theme", "light");
@@ -11,7 +12,7 @@ function App() {
           path="/"
           element={
             <Layout>
-              <p>Home Page</p>
+              <HomePage />
             </Layout>
           }
         />

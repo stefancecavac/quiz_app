@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.server.dto.CreateOptionDto;
 import com.example.server.entity.Option;
 import com.example.server.entity.Question;
-import com.example.server.exception.ApiRequestException;
+
 import com.example.server.repository.OptionRepository;
 import com.example.server.repository.QuestionRepository;
 
@@ -25,20 +25,20 @@ public class OptionService {
 
     public List<Option> createOption(UUID id, List<CreateOptionDto> createOptionDtoList) {
         Question question = questionRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Question with that id not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Question with that id not found"));
 
         int existingcount = question.getOptions() != null ? question.getOptions().size() : 0;
         if (createOptionDtoList.size() < 3) {
-            throw new ApiRequestException("Each question must have 3 options");
+            new IllegalArgumentException("Each question must have 3 options");
         }
         if (existingcount >= 3) {
-            throw new ApiRequestException("Each question must have 3 options");
+            new IllegalArgumentException("Each question must have 3 options");
         }
 
         Long correctCount = createOptionDtoList.stream().filter(dto -> Boolean.TRUE.equals(dto.getIsCorrect())).count();
 
         if (correctCount != 1) {
-            throw new ApiRequestException("Question must have only 1 correct option");
+            new IllegalArgumentException("Question must have only 1 correct option");
         }
 
         List<Option> options = createOptionDtoList.stream().map(dto -> {

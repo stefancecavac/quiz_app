@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import com.example.server.dto.CreateQustionDto;
 import com.example.server.entity.Question;
 import com.example.server.entity.Quiz;
-import com.example.server.exception.ApiRequestException;
 import com.example.server.repository.QuestionRepository;
 import com.example.server.repository.QuizRepository;
 
@@ -24,13 +23,13 @@ public class QuestionService {
 
     public Question getQuestion(UUID id) {
         return questionRepository.findById(id)
-                .orElseThrow(() -> new ApiRequestException("Question with that id not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Question with that id not found"));
 
     }
 
     public CreateQustionDto createQuestion(CreateQustionDto createQustionDto) {
         Quiz quiz = quizRepository.findById(createQustionDto.getQuizId())
-                .orElseThrow(() -> new ApiRequestException("Quiz whith that id not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Quiz whith that id not found"));
 
         Question question = new Question();
         question.setContent(createQustionDto.getContent());
