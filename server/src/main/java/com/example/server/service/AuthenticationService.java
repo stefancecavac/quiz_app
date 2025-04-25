@@ -7,12 +7,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.server.dto.CurrentUserDto;
 import com.example.server.dto.LoginRequest;
+import com.example.server.entity.User;
 import com.example.server.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
@@ -39,8 +43,11 @@ public class AuthenticationService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    @Value("${jwt.expiration}")
-    private long expirationTime;
+    @Value("${jwt.accessExpiration}")
+    private long accessTokenExpiration;
+
+    @Value("${jwt.refreshExpiration}")
+    private long refreshTokenExpiration;
 
     public UserDetails authenticate(LoginRequest loginRequest) {
         authenticationManager.authenticate(
@@ -49,11 +56,20 @@ public class AuthenticationService {
         return userDetailsService.loadUserByUsername(loginRequest.getUsername());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateAccessToken(UserDetails userDetails) {
         return Jwts.builder()
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + expirationTime))
+                .expiration(new Date(System.currentTimeMillis() + accessTokenExpiration))
+                .signWith(getSigningKey())
+                .compact();
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return Jwts.builder()
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + refreshTokenExpiration))
                 .signWith(getSigningKey())
                 .compact();
     }
@@ -78,7 +94,7 @@ public class AuthenticationService {
     }
 
     public com.example.server.entity.User registerUser(LoginRequest loginRequest) {
-        Optional<com.example.server.entity.User> existingUser = userRepository
+        Optional<User> existingUser = userRepository
                 .findByUsername(loginRequest.getUsername());
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("User with that username already exists");
@@ -89,5 +105,17 @@ public class AuthenticationService {
         newUser.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
 
         return userRepository.save(newUser);
+    }
+
+    public CurrentUserDto getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            return userRepository.findByUsername(username)
+                    .map(user -> new CurrentUserDto(user.getId(), user.getUsername()))
+                    .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        }
+        throw new IllegalStateException("No authenticated user found");
     }
 }

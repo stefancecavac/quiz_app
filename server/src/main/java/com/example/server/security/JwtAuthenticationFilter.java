@@ -23,6 +23,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return path.startsWith("/api/auth/");
+    }
+
+    @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
@@ -39,9 +45,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     request.setAttribute("userId", customUserDetails.getId());
                 }
 
+            } else {
+                response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                response.getWriter().write("Access Denied: No token provided.");
+                return;
             }
         } catch (Exception e) {
-            System.out.println("Recieved invalid auth token");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.getWriter().write("Access Denied: Invalid token.");
             return;
         }
 

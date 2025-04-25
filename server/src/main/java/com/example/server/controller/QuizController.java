@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/quizzes")
+
 public class QuizController {
 
     private final QuizService quizService;
@@ -34,7 +35,12 @@ public class QuizController {
     public ResponseEntity<List<GetAllQuizzesDto>> getQuizzes() {
         List<GetAllQuizzesDto> quizzes = quizService.getAllQuizzes();
         return ResponseEntity.ok(quizzes);
+    }
 
+    @GetMapping("/my-quizzes")
+    public ResponseEntity<List<GetAllQuizzesDto>> getUserQuizzes() {
+        List<GetAllQuizzesDto> quizzes = quizService.getAllUserQuizzess();
+        return ResponseEntity.ok(quizzes);
     }
 
     @GetMapping("/{id}")
