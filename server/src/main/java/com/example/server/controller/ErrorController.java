@@ -31,8 +31,8 @@ public class ErrorController {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ApiErrorResponse> handleBadCredentialsException(BadCredentialsException ex) {
         ApiErrorResponse error = new ApiErrorResponse();
-        error.setStatus(401);
+        error.setStatus(400);
         error.setMessage("Incorrect username or password");
-        return ResponseEntity.status(401).body(error);
+        return ResponseEntity.status(400).body(error);
     }
 }

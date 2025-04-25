@@ -68,7 +68,7 @@ public class AuthenticationController {
         Cookie[] cookies = request.getCookies();
 
         if (cookies == null) {
-            return ResponseEntity.status(403).build();
+            return ResponseEntity.status(401).build();
         }
         String refreshToken = null;
         for (Cookie cookie : cookies) {

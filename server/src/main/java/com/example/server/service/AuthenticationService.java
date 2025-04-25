@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.example.server.dto.CurrentUserDto;
 import com.example.server.dto.LoginRequest;
@@ -113,9 +115,9 @@ public class AuthenticationService {
             String username = authentication.getName();
             return userRepository.findByUsername(username)
                     .map(user -> new CurrentUserDto(user.getId(), user.getUsername()))
-                    .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
         }
-        throw new IllegalStateException("No authenticated user found");
+
+        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No authenticated user found");
     }
 }
