@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { useCreateQuiz } from "../api/QuizApi";
 import { useForm } from "react-hook-form";
 import { CreateQuizData, createQuizSchema } from "../types";
@@ -19,23 +18,12 @@ export const CreateQuizPage = () => {
 
   return (
     <div className="w-full flex flex-col items-center  justify-center ">
-      <div className="p-5 w-fit self-start">
-        <Link to={"/"} className="flex items-center gap-5">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={3}
-            stroke="currentColor"
-            className="size-8 text-base-content/50"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-          </svg>
-          <p className=" text-base-content/50 font-medium text-xl">Back to Dashboard</p>
-        </Link>
-      </div>
-      <form onSubmit={handleSubmit(handleCreateQuiz)} className="w-2/5">
-        <h1 className="text-4xl text-base-content font-medium">Create a Quizz</h1>
+      <form onSubmit={handleSubmit(handleCreateQuiz)} className="w-4/5">
+        <h1 className="text-base-content font-medium text-5xl text-center">Create Quiz!</h1>
+        <p className="text-base-content/70 font-medium text-center mt-2">
+          Start by giving your quiz a title. This will help users know what your quiz is about. Once you’ve created it, you can add questions and
+          build a fun, engaging experience!
+        </p>
         <div className="flex flex-col mt-10 gap-10">
           <label className="flex flex-col gap-3">
             <input

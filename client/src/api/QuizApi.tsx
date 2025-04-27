@@ -21,7 +21,7 @@ export const useGetSingleQuiz = () => {
   const { quizId } = useParams();
   const getSingleQuizApi = async () => {
     const response = await axiosInstance.get(`/quizzes/${quizId}`);
-    return response.data;
+    return response.data as QuizData;
   };
 
   const { data: quiz } = useQuery({
@@ -44,7 +44,7 @@ export const useCreateQuiz = () => {
     mutationKey: ["quizzes"],
     mutationFn: createQuizApi,
     onSuccess: (data) => {
-      navigate(`/create/${data.id}`);
+      navigate(`/create-quiz/${data.id}/add-question`);
     },
   });
 

@@ -6,6 +6,7 @@ import { UseAuthContext } from "./context/AuthContext";
 import { LoginPage } from "./pages/LoginPage";
 import { LandingPage } from "./pages/LandingPage";
 import { CreateQuestionsPage } from "./pages/CreateQustionsPage";
+import { CreateQuizLayout } from "./components/layout/CreateQuizLayout";
 
 function App() {
   const { user, userLoading } = UseAuthContext();
@@ -27,9 +28,27 @@ function App() {
             )
           }
         />
-        <Route path="/create" element={<CreateQuizPage />} />
+        <Route
+          path="/create-quiz"
+          element={
+            <CreateQuizLayout>
+              <CreateQuizPage />
+            </CreateQuizLayout>
+          }
+        />
 
-        <Route path="/create/:quizId" element={!user ? <Navigate to={"/login"} /> : <CreateQuestionsPage />} />
+        <Route
+          path="/create-quiz/:quizId/add-question"
+          element={
+            !user ? (
+              <Navigate to={"/login"} />
+            ) : (
+              <CreateQuizLayout>
+                <CreateQuestionsPage />
+              </CreateQuizLayout>
+            )
+          }
+        />
 
         <Route path="/welcome" element={<LandingPage />} />
 

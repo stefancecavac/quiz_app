@@ -8,7 +8,7 @@ export const HomePage = () => {
     <div className="w-full h-full flex flex-col m-5">
       <div className="flex">
         <Link
-          to={"/create"}
+          to={"/create-quiz"}
           className="p-1 px-3 bg-primary rounded-lg cursor-pointer select-none
       active:translate-y-1 active:[box-shadow:0_0px_0_0_,0_0px_0_0_]
       active:border-b-[0px]
