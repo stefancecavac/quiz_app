@@ -33,9 +33,10 @@ public class QuestionController {
         return ResponseEntity.ok(question);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<CreateQustionDto> createQuestion(@Valid @RequestBody CreateQustionDto createQustionDto) {
-        CreateQustionDto createdQuestion = questionService.createQuestion(createQustionDto);
+    @PostMapping("/{quizId}")
+    public ResponseEntity<CreateQustionDto> createQuestion(@PathVariable UUID quizId,
+            @Valid @RequestBody CreateQustionDto createQustionDto) {
+        CreateQustionDto createdQuestion = questionService.createQuestion(createQustionDto, quizId);
         return ResponseEntity.ok(createdQuestion);
     }
 

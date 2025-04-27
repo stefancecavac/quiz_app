@@ -3,6 +3,7 @@ import React, { useContext, useLayoutEffect, useState } from "react";
 import { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { axiosInstance } from "../config/ApiClient";
 import { getCurrentUser, loginUser, logoutUser, registerUser } from "../api/AuthApi";
+import { LoginData } from "../types";
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
@@ -12,7 +13,9 @@ type AuthContextType = {
   user?: { username: string; id: string };
   userLoading: boolean;
   accessToken: string | null;
-  login: ({ username, password }: { username: string; password: string }) => void;
+  login: (data: LoginData) => void;
+  loginError: Error | null;
+  isLogging: boolean;
   register: ({ username, password }: { username: string; password: string }) => void;
   logout: () => void;
 };
@@ -30,7 +33,11 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     staleTime: Infinity,
   });
 
-  const { mutate: login } = useMutation({
+  const {
+    mutate: login,
+    error: loginError,
+    isPending: isLogging,
+  } = useMutation({
     mutationKey: ["auth"],
     mutationFn: loginUser,
     onSuccess: (data) => {
@@ -106,7 +113,9 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     };
   }, [accessToken]);
 
-  return <AuthContext.Provider value={{ user, userLoading, accessToken, login, register, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, userLoading, accessToken, loginError, login, isLogging, register, logout }}>{children}</AuthContext.Provider>
+  );
 };
 
 export const UseAuthContext = () => {

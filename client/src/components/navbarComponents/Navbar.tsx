@@ -7,7 +7,7 @@ import { ProfileIcon } from "../ui/icons/ProfileIcon";
 export const Navbar = () => {
   return (
     <div className="w-80 border-r-2 border-zinc-200 shadow-lg p-2">
-      <h1 className="text-primary font-medium text-4xl m-2 tracking-wide text-shadow-primary/10 text-shadow-lg  ">Quiz app</h1>
+      <h1 className="text-primary font-medium text-4xl m-2 tracking-wide text-shadow-primary/10 text-shadow-lg  ">Quizzy</h1>
 
       <div className="flex flex-col gap-3 mt-10 px-2">
         <NavLink

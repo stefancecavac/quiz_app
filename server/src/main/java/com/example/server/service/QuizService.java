@@ -52,9 +52,13 @@ public class QuizService {
         Quiz quiz = new Quiz();
         quiz.setTitle(createQuizDto.getTitle());
         quiz.setUser(user);
-        quizRepository.save(quiz);
+        quiz = quizRepository.save(quiz);
 
-        return createQuizDto;
+        CreateQuizDto createQuiz = new CreateQuizDto();
+        createQuiz.setId(quiz.getId());
+        createQuiz.setTitle(quiz.getTitle());
+
+        return createQuiz;
     }
 
     public Quiz deleteQuizById(UUID id) {

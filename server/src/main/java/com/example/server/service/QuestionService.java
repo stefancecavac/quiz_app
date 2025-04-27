@@ -27,8 +27,8 @@ public class QuestionService {
 
     }
 
-    public CreateQustionDto createQuestion(CreateQustionDto createQustionDto) {
-        Quiz quiz = quizRepository.findById(createQustionDto.getQuizId())
+    public CreateQustionDto createQuestion(CreateQustionDto createQustionDto, UUID quizId) {
+        Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new IllegalArgumentException("Quiz whith that id not found"));
 
         Question question = new Question();

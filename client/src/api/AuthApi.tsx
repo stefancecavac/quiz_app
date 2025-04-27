@@ -1,5 +1,6 @@
 import { AxiosError } from "axios";
 import { axiosInstance } from "../config/ApiClient";
+import { LoginData } from "../types";
 
 export const registerUser = async ({ username, password }: { username: string; password: string }) => {
   try {
@@ -11,9 +12,9 @@ export const registerUser = async ({ username, password }: { username: string; p
   }
 };
 
-export const loginUser = async ({ username, password }: { username: string; password: string }) => {
+export const loginUser = async (data: LoginData) => {
   try {
-    const response = await axiosInstance.post(`auth/login`, { username, password });
+    const response = await axiosInstance.post(`auth/login`, data);
     return response.data;
   } catch (error) {
     const axiosError = error as AxiosError<{ message?: string }>;

@@ -16,6 +16,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.example.server.repository.UserRepository;
 import com.example.server.service.AuthenticationService;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @Configuration
 public class SecurityConfig {
 
@@ -33,10 +35,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity,
             JwtAuthenticationFilter jwtAuthenticationFilter) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable()).cors(Customizer.withDefaults()).authorizeHttpRequests(
-                auth -> auth.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+                auth -> auth
+                        .requestMatchers(HttpMethod.POST, "/api/auth/**")
+                        .permitAll()
                         .anyRequest()
                         .authenticated())
+                .logout(logout -> logout.logoutUrl("/api/auth/logout")
+                        .deleteCookies("refreshToken", "JSESSIONID")
+                        .invalidateHttpSession(true)
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
 
+                        }))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
