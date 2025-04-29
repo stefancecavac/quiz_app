@@ -2,13 +2,18 @@ import { useCreateQustion } from "../api/QustionApi";
 import { useForm } from "react-hook-form";
 import { CreateQuestionData, createQuestionSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
-import { useGetSingleQuiz } from "../api/QuizApi";
+import { useGetSingleQuiz, useMarkQuizForCompletion } from "../api/QuizApi";
 import { useState } from "react";
+import { AxiosError } from "axios";
 
 export const CreateQuestionsPage = () => {
   const { quiz } = useGetSingleQuiz();
   const { createQuestion } = useCreateQustion();
   const [correctIndex, setCorrectIndex] = useState<number>(0);
+
+const {markQuizForCompletion , markQuizForCompletionError} = useMarkQuizForCompletion()
+
+
   const {
     register,
     handleSubmit,
@@ -35,6 +40,8 @@ export const CreateQuestionsPage = () => {
   };
 
   const watchedOptions = watch("options");
+
+console.log(markQuizForCompletionError)
 
   return (
     <div className="w-full flex flex-col items-center  justify-center  ">
@@ -110,10 +117,12 @@ border-b-[0.5px] border-white/10"
         </div>
       </form>
 
-      <div className="flex items-center gap-5 mt-10">
+
+      <div className="flex flex-col  items-center gap-5 mt-10">
         <button
-          type="submit"
-          className="py-2 self-end w-fit px-5  bg-primary hover:bg-primary/70 rounded-2xl cursor-pointer select-none
+        type="button"
+        onClick={() => markQuizForCompletion()}
+          className="py-2  w-fit px-5  bg-primary hover:bg-primary/70 rounded-2xl cursor-pointer select-none
 active:translate-y-1 active:[box-shadow:0_0px_0_0_,0_0px_0_0_]
 active:border-b-[0px]
 transition-all duration-110
@@ -124,6 +133,7 @@ border-b-[0.5px] border-white/10"
             Finish Creating quiz {/* {isLogging ? <span className="loading loading-spinner py-3"></span> : "Login"} */}
           </span>
         </button>
+        {markQuizForCompletionError && <span className="text-error font-medium">{markQuizForCompletionError}</span>}
       </div>
     </div>
   );

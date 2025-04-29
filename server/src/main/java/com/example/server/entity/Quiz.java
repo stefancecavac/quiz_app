@@ -29,6 +29,8 @@ public class Quiz {
     @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
     private String title;
 
+    private Boolean isFinishedCreating = false;
+
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
@@ -74,6 +76,14 @@ public class Quiz {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getIsFinishedCreating() {
+        return isFinishedCreating;
+    }
+
+    public void setIsFinishedCreating(Boolean isFinishedCreating) {
+        this.isFinishedCreating = isFinishedCreating;
     }
 
 }

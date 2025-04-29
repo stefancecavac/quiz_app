@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -46,6 +47,12 @@ public class QuizController {
     @GetMapping("/{id}")
     public ResponseEntity<Quiz> getSingleQuiz(@PathVariable UUID id) {
         Quiz quiz = quizService.getQuizById(id);
+        return ResponseEntity.ok(quiz);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Quiz> markQuizFinished(@PathVariable UUID id) {
+        Quiz quiz = quizService.markQuizFinished(id);
         return ResponseEntity.ok(quiz);
     }
 

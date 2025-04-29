@@ -5,7 +5,7 @@ export const HomePage = () => {
   const { quizzes } = useGetAllQuizzes();
 
   return (
-    <div className="w-full h-full flex flex-col m-5">
+    <div className=" grow h-full flex flex-col m-5">
       <div className="flex">
         <Link
           to={"/create-quiz"}
@@ -24,7 +24,7 @@ export const HomePage = () => {
         <p>All quizzes</p>
         <div className="grid grid-cols-3 gap-5">
           {quizzes?.map((quiz) => (
-            <div className=" rounded-lg  p-5 border border-base-content/20 hover:cursor-pointer hover:scale-105 transition-all [box-shadow:0_7px_0_0_color-mix(in_srgb,var(--color-base-content)_20%,white)]">
+            <div className=" rounded-lg  hover:bg-secondary  p-5 border border-base-content/20 hover:cursor-pointer hover:scale-105 transition-all hover:[box-shadow:0_7px_0_0_color-mix(in_srgb,var(--color-secondary)_80%,black)] [box-shadow:0_7px_0_0_color-mix(in_srgb,var(--color-base-content)_20%,white)]">
               <p className="text-xl font-medium text-base-content">{quiz.title}</p>
             </div>
           ))}

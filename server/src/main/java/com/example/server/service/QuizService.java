@@ -61,6 +61,18 @@ public class QuizService {
         return createQuiz;
     }
 
+    public Quiz markQuizFinished(UUID id) {
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Quiz with id: " + id + " not found"));
+
+        if (quiz.getQuestions().size() < 1) {
+            throw new IllegalArgumentException("Quiz must have atleast one question");
+        }
+
+        quiz.setIsFinishedCreating(true);
+        return quizRepository.save(quiz);
+    }
+
     public Quiz deleteQuizById(UUID id) {
         CurrentUserDto currentUser = authenticationService.getCurrentUser();
 
