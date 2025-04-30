@@ -10,6 +10,7 @@ import com.example.server.dto.CreateQustionDto;
 import com.example.server.entity.Option;
 import com.example.server.entity.Question;
 import com.example.server.entity.Quiz;
+import com.example.server.enums.Difficulty;
 import com.example.server.repository.OptionRepository;
 import com.example.server.repository.QuestionRepository;
 import com.example.server.repository.QuizRepository;
@@ -61,6 +62,22 @@ public class QuestionService {
             option.setIsCorrect(dto.getIsCorrect());
             return option;
         }).toList();
+
+        int questionCount = quiz.getQuestions().size() + 1;
+
+        if (questionCount <= 5) {
+            quiz.setDifficulty(Difficulty.EASY);
+        }
+
+        if (questionCount > 5 && questionCount <= 10) {
+            quiz.setDifficulty(Difficulty.MEDIUM);
+        }
+
+        if (questionCount > 10) {
+            quiz.setDifficulty(Difficulty.HARD);
+        }
+
+        quizRepository.save(quiz);
 
         optionRepository.saveAll(options);
 

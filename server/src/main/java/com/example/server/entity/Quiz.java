@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.server.enums.Difficulty;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +33,8 @@ public class Quiz {
 
     private Boolean isFinishedCreating = false;
 
+    private Difficulty difficulty;
+
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
@@ -38,9 +42,15 @@ public class Quiz {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Quiz(UUID id, String title) {
+    public Quiz(UUID id,
+            @NotNull(message = "title must not be empty!") @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters") String title,
+            Boolean isFinishedCreating, Difficulty difficulty, List<Question> questions, User user) {
         this.id = id;
         this.title = title;
+        this.isFinishedCreating = isFinishedCreating;
+        this.difficulty = difficulty;
+        this.questions = questions;
+        this.user = user;
     }
 
     public Quiz() {
@@ -84,6 +94,14 @@ public class Quiz {
 
     public void setIsFinishedCreating(Boolean isFinishedCreating) {
         this.isFinishedCreating = isFinishedCreating;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
 }

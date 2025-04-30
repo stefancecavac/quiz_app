@@ -1,13 +1,13 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { axiosInstance } from "../config/ApiClient";
-import { CreateQuizData, QuizData } from "../types";
+import { CreateQuizData, QuizData, QuizzesData } from "../types";
 import { useNavigate, useParams } from "react-router";
 import { getErrorMessage } from "../util/getErrorMessage";
 
 export const useGetAllQuizzes = () => {
   const getAllQuizzesApi = async () => {
     const response = await axiosInstance.get("/quizzes/");
-    return response.data;
+    return response.data as QuizzesData[];
   };
 
   const { data: quizzes } = useQuery({
@@ -52,25 +52,23 @@ export const useCreateQuiz = () => {
   return { createQuiz };
 };
 
-
 export const useMarkQuizForCompletion = () => {
   const navigate = useNavigate();
-  const {quizId} = useParams()
+  const { quizId } = useParams();
 
   const markQuizForCompletionApi = async () => {
     const response = await axiosInstance.put(`/quizzes/${quizId}`);
     return response.data as QuizData;
   };
 
-  const { mutate: markQuizForCompletion , error } = useMutation({
+  const { mutate: markQuizForCompletion, error } = useMutation({
     mutationKey: ["quizzes"],
     mutationFn: markQuizForCompletionApi,
     onSuccess: (data) => {
-      navigate('/')
+      navigate("/");
     },
   });
 
-
-  const markQuizForCompletionError =getErrorMessage(error)
-  return { markQuizForCompletion , markQuizForCompletionError };
+  const markQuizForCompletionError = getErrorMessage(error);
+  return { markQuizForCompletion, markQuizForCompletionError };
 };

@@ -29,13 +29,19 @@ public class QuizService {
 
     public List<GetAllQuizzesDto> getAllQuizzes() {
         List<Quiz> quizzes = quizRepository.findAll();
-        return quizzes.stream().map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle())).toList();
+        return quizzes.stream()
+                .map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle(), q.getDifficulty(),
+                        new CurrentUserDto(q.getUser().getId(), q.getUser().getUsername()), q.getQuestions().size()))
+                .toList();
     }
 
     public List<GetAllQuizzesDto> getAllUserQuizzess() {
         CurrentUserDto user = authenticationService.getCurrentUser();
         List<Quiz> quizzes = quizRepository.findByUserId(user.getId());
-        return quizzes.stream().map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle())).toList();
+        return quizzes.stream()
+                .map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle(), q.getDifficulty(),
+                        new CurrentUserDto(q.getUser().getId(), q.getUser().getUsername()), q.getQuestions().size()))
+                .toList();
     }
 
     public Quiz getQuizById(UUID id) {

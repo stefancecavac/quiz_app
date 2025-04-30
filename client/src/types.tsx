@@ -22,6 +22,15 @@ export const quizSchema = z.object({
 
 export type QuizData = z.infer<typeof quizSchema>;
 
+
+export const quizzesSchema = z.object({
+  id: z.string().uuid(),
+  title: z.string(),
+  difficulty:z.enum(['EASY' ,"MEDIUM" , "HARD"])
+});
+
+export type QuizzesData = z.infer<typeof quizzesSchema>;
+
 export const createQuizSchema = z.object({
   title: z
     .string({ message: "Title must not be empty" })
