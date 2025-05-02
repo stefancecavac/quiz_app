@@ -3,14 +3,16 @@ package com.example.server.dto;
 import java.util.UUID;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class CreateQuizDto {
     @Valid
 
     private UUID id;
 
-    @NotBlank(message = "Title must not be empty!")
+    @NotNull(message = "title must not be empty!")
+    @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
     private String title;
 
     public String getTitle() {

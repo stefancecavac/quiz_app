@@ -42,7 +42,9 @@ public class QuestionService {
         Question question = new Question();
         question.setContent(createQustionDto.getContent());
         question.setQuiz(quiz);
+
         questionRepository.save(question);
+        quiz.getQuestions().add(question);
 
         List<CreateOptionDto> optionsDtos = createQustionDto.getOptions();
 
@@ -63,7 +65,7 @@ public class QuestionService {
             return option;
         }).toList();
 
-        int questionCount = quiz.getQuestions().size() + 1;
+        int questionCount = quiz.getQuestions().size();
 
         if (questionCount <= 5) {
             quiz.setDifficulty(Difficulty.EASY);
@@ -77,6 +79,7 @@ public class QuestionService {
             quiz.setDifficulty(Difficulty.HARD);
         }
 
+        quiz.setQuestionCount(questionCount);
         quizRepository.save(quiz);
 
         optionRepository.saveAll(options);

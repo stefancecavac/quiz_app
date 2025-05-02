@@ -11,13 +11,18 @@ public class GetAllQuizzesDto {
     private Difficulty difficulty;
     private CurrentUserDto user;
     private int questionCount;
+    private int currencyReward;
+    private int trophyReward;
 
-    public GetAllQuizzesDto(UUID id, String title, Difficulty difficulty, CurrentUserDto user, int questionCount) {
+    public GetAllQuizzesDto(UUID id, String title, Difficulty difficulty, CurrentUserDto user, int questionCount,
+            int currencyReward, int trophyReward) {
         this.id = id;
         this.title = title;
         this.difficulty = difficulty;
         this.user = user;
         this.questionCount = questionCount;
+        this.currencyReward = currencyReward;
+        this.trophyReward = trophyReward;
     }
 
     public GetAllQuizzesDto() {
@@ -61,6 +66,22 @@ public class GetAllQuizzesDto {
 
     public void setQuestionCount(int questionCount) {
         this.questionCount = questionCount;
+    }
+
+    public int getCurrencyReward() {
+        return currencyReward;
+    }
+
+    public void setCurrencyReward(int currencyReward) {
+        this.currencyReward = currencyReward;
+    }
+
+    public int getTrophyReward() {
+        return trophyReward;
+    }
+
+    public void setTrophyReward(int trophyReward) {
+        this.trophyReward = trophyReward;
     }
 
 }

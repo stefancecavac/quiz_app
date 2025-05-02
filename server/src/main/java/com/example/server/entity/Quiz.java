@@ -1,6 +1,5 @@
 package com.example.server.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,8 +14,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "quiz")
@@ -27,28 +24,34 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @NotNull(message = "title must not be empty!")
-    @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters")
     private String title;
 
     private Boolean isFinishedCreating = false;
 
     private Difficulty difficulty;
 
+    private int currencyReward;
+
+    private int trophyReward;
+
+    private int questionCount;
+
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Question> questions = new ArrayList<>();
+    private List<Question> questions;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Quiz(UUID id,
-            @NotNull(message = "title must not be empty!") @Size(min = 3, max = 100, message = "Title must be between 3 and 100 characters") String title,
-            Boolean isFinishedCreating, Difficulty difficulty, List<Question> questions, User user) {
+    public Quiz(UUID id, String title, Boolean isFinishedCreating, Difficulty difficulty, int currencyReward,
+            int trophyReward, int questionCount, List<Question> questions, User user) {
         this.id = id;
         this.title = title;
         this.isFinishedCreating = isFinishedCreating;
         this.difficulty = difficulty;
+        this.currencyReward = currencyReward;
+        this.trophyReward = trophyReward;
+        this.questionCount = questionCount;
         this.questions = questions;
         this.user = user;
     }
@@ -102,6 +105,30 @@ public class Quiz {
 
     public void setDifficulty(Difficulty difficulty) {
         this.difficulty = difficulty;
+    }
+
+    public int getCurrencyReward() {
+        return currencyReward;
+    }
+
+    public void setCurrencyReward(int currencyReward) {
+        this.currencyReward = currencyReward;
+    }
+
+    public int getTrophyReward() {
+        return trophyReward;
+    }
+
+    public void setTrophyReward(int trophyReward) {
+        this.trophyReward = trophyReward;
+    }
+
+    public int getQuestionCount() {
+        return questionCount;
+    }
+
+    public void setQuestionCount(int questionCount) {
+        this.questionCount = questionCount;
     }
 
 }
