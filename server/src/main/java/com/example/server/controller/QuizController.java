@@ -5,12 +5,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.server.dto.CreateQuizDto;
 import com.example.server.dto.GetAllQuizzesDto;
+import com.example.server.dto.QuestionDto;
+import com.example.server.dto.QuizResultDto;
+import com.example.server.dto.SubmitQuizDto;
 import com.example.server.entity.Quiz;
 import com.example.server.service.QuizService;
 
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
@@ -66,5 +70,17 @@ public class QuizController {
     public ResponseEntity<Quiz> deleteQuiz(@PathVariable UUID id) {
         Quiz deletedQuiz = quizService.deleteQuizById(id);
         return ResponseEntity.ok(deletedQuiz);
+    }
+
+    @PostMapping("/start")
+    public ResponseEntity<List<QuestionDto>> startQuiz(@RequestBody UUID id) {
+        List<QuestionDto> questions = quizService.startQuiz(id);
+        return ResponseEntity.ok(questions);
+    }
+
+    @PostMapping("/submit")
+    public ResponseEntity<QuizResultDto> submitQuiz(@RequestBody SubmitQuizDto submitQuizDto) {
+        QuizResultDto result = quizService.submitQuiz(submitQuizDto);
+        return ResponseEntity.ok(result);
     }
 }

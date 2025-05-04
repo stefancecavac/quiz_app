@@ -1,3 +1,4 @@
+import { useStartQuiz } from "../api/QuizApi";
 import { QuizzesData } from "../types";
 import { CurrencyIcon } from "./ui/icons/CurrencyIcon";
 import { TrophyIcon } from "./ui/icons/TrophyIcon";
@@ -7,6 +8,8 @@ type QuizCardProps = {
 };
 
 export const QuizCard = ({ quiz }: QuizCardProps) => {
+  const { startQuiz } = useStartQuiz();
+
   return (
     <div
       className={`rounded-lg flex flex-col overflow-auto     border border-base-content/20  hover:scale-105 transition-all  [box-shadow:0_7px_0_0_color-mix(in_srgb,var(--color-base-content)_20%,white)]`}
@@ -33,14 +36,14 @@ export const QuizCard = ({ quiz }: QuizCardProps) => {
           <p className="font-medium text-base-content/50 ">Rewards:</p>
           <div className="flex items-center gap-2">
             <p className=" flex items-center gap-2 font-medium text-lg text-secondary">
-              + 50
+              + {quiz.currencyReward}
               <div className="size-4">
                 <CurrencyIcon />
               </div>
             </p>
 
             <p className="text-yellow-400 flex items-center gap-2 font-medium text-lg">
-              + 1
+              + {quiz.trophyReward}
               <div className="size-5">
                 <TrophyIcon />
               </div>
@@ -51,6 +54,7 @@ export const QuizCard = ({ quiz }: QuizCardProps) => {
 
       <div className=" items-center justify-center flex flex-col  p-3 ">
         <button
+          onClick={() => startQuiz(quiz.id)}
           type="submit"
           className="py-2 w-fit px-6 bg-secondary hover:bg-secondary/80   rounded-2xl cursor-pointer select-none
       active:translate-y-1 active:[box-shadow:0_0px_0_0_,0_0px_0_0_]

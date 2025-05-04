@@ -105,6 +105,8 @@ public class AuthenticationService {
         com.example.server.entity.User newUser = new com.example.server.entity.User();
         newUser.setUsername(loginRequest.getUsername());
         newUser.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+        newUser.setCurrency(300);
+        newUser.setTrophy(0);
 
         return userRepository.save(newUser);
     }
@@ -114,7 +116,8 @@ public class AuthenticationService {
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
             return userRepository.findByUsername(username)
-                    .map(user -> new CurrentUserDto(user.getId(), user.getUsername()))
+                    .map(user -> new CurrentUserDto(user.getId(), user.getUsername(), user.getCurrency(),
+                            user.getTrophy()))
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
         }
 

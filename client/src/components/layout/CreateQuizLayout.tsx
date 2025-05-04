@@ -19,26 +19,7 @@ export const CreateQuizLayout = ({ children }: { children: React.ReactNode }) =>
           <p className=" text-base-content/50 font-medium text-xl">Back to Dashboard</p>
         </Link>
       </div>
-      <div className="w-3/5 flex flex-col gap-10 mt-10">
-        {/* <ul className="steps affte:bg-red-500">
-          <li className={`step after:!rounded-lg  ${location.pathname.includes("create-quiz") && "step-primary"} `}>Create Quiz</li>
-          <li
-            className={`step after:!rounded-lg ${
-              location.pathname.includes("add-question") ? "step-primary" : "before:!bg-base-content/10 after:!bg-base-"
-            } `}
-          >
-            Add a question
-          </li>
-          <li className={`step  after:!rounded-lg ${location.pathname.includes("add-option") ? "step-primary" : "before:!bg-base-content/10"} `}>
-            Add options
-          </li>
-          <li className={`step after:!rounded-lg ${location.pathname.includes("finalize") ? "step-primary" : "before:!bg-base-content/10"} `}>
-            Finalize
-          </li>
-        </ul> */}
-
-        {children}
-      </div>
+      <div className="w-3/5 flex flex-col gap-10 mt-10">{children}</div>
     </div>
   );
 };

@@ -1,8 +1,10 @@
+import { UseAuthContext } from "../../context/AuthContext";
 import { CurrencyIcon } from "../ui/icons/CurrencyIcon";
 import { LifeIcon } from "../ui/icons/LifeIcon";
 import { TrophyIcon } from "../ui/icons/TrophyIcon";
 
 export const StatsComponent = () => {
+  const { user } = UseAuthContext();
   return (
     <div className="flex items-center gap-10">
       <div className="flex items-center gap-2 ">
@@ -11,13 +13,17 @@ export const StatsComponent = () => {
       </div>
 
       <div className="flex items-center gap-2">
-        <TrophyIcon />
-        <p className="text-yellow-500 font-medium">5</p>
+        <div className="size-5">
+          <TrophyIcon />
+        </div>
+        <p className="text-yellow-500 font-medium">{user?.trophy}</p>
       </div>
 
       <div className="flex items-center gap-2">
-        <CurrencyIcon />
-        <p className="text-secondary font-medium">400</p>
+        <div className="size-5">
+          <CurrencyIcon />
+        </div>
+        <p className="text-secondary font-medium">{user?.currency}</p>
       </div>
     </div>
   );

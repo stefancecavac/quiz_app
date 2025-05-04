@@ -3,14 +3,14 @@ import React, { useContext, useLayoutEffect, useState } from "react";
 import { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { axiosInstance } from "../config/ApiClient";
 import { getCurrentUser, loginUser, logoutUser, registerUser } from "../api/AuthApi";
-import { LoginData } from "../types";
+import { LoginData, UserData } from "../types";
 
 interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
 type AuthContextType = {
-  user?: { username: string; id: string };
+  user?: UserData;
   userLoading: boolean;
   accessToken: string | null;
   login: (data: LoginData) => void;

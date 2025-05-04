@@ -7,6 +7,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { LandingPage } from "./pages/LandingPage";
 import { CreateQuestionsPage } from "./pages/CreateQustionsPage";
 import { CreateQuizLayout } from "./components/layout/CreateQuizLayout";
+import { StartQuizPage } from "./pages/StartQuizPage";
 
 function App() {
   const { user, userLoading } = UseAuthContext();
@@ -51,6 +52,7 @@ function App() {
         />
 
         <Route path="/welcome" element={<LandingPage />} />
+        <Route path="/start" element={<StartQuizPage />} />
 
         <Route path="/login" element={user ? <Navigate to={"/"} /> : <LoginPage />} />
       </Routes>

@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { axiosInstance } from "../config/ApiClient";
-import { LoginData } from "../types";
+import { LoginData, UserData } from "../types";
 
 export const registerUser = async ({ username, password }: { username: string; password: string }) => {
   try {
@@ -37,7 +37,7 @@ export const logoutUser = async () => {
 export const getCurrentUser = async () => {
   try {
     const response = await axiosInstance.get(`auth/current-user`);
-    return response.data as { username: string; id: string };
+    return response.data as UserData;
   } catch (error) {
     const axiosError = error as AxiosError<{ message?: string }>;
 
