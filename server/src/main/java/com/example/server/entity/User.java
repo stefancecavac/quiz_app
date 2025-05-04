@@ -26,22 +26,26 @@ public class User {
     private String password;
 
     private int currency;
+
     private int trophy;
 
-    public User(UUID id, String username, String password, int currency, int trophy, List<Quiz> quizzes) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.currency = currency;
-        this.trophy = trophy;
-        this.quizzes = quizzes;
-    }
+    private int hearts;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Quiz> quizzes;
 
     public User() {
+    }
+
+    public User(UUID id, String username, String password, int currency, int trophy, int hearts, List<Quiz> quizzes) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.currency = currency;
+        this.trophy = trophy;
+        this.hearts = hearts;
+        this.quizzes = quizzes;
     }
 
     public UUID getId() {
@@ -90,6 +94,14 @@ public class User {
 
     public void setTrophy(int trophy) {
         this.trophy = trophy;
+    }
+
+    public int getHearts() {
+        return hearts;
+    }
+
+    public void setHearts(int hearts) {
+        this.hearts = hearts;
     }
 
 }

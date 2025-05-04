@@ -17,6 +17,8 @@ type AuthContextType = {
   loginError: Error | null;
   isLogging: boolean;
   register: ({ username, password }: { username: string; password: string }) => void;
+  registerError: Error | null;
+  isRegistering: boolean;
   logout: () => void;
 };
 
@@ -46,7 +48,11 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
     },
   });
 
-  const { mutate: register } = useMutation({
+  const {
+    mutate: register,
+    error: registerError,
+    isPending: isRegistering,
+  } = useMutation({
     mutationKey: ["auth"],
     mutationFn: registerUser,
     onSuccess: () => {
@@ -114,7 +120,9 @@ export const AuthContextProvider = ({ children }: { children: React.ReactNode })
   }, [accessToken]);
 
   return (
-    <AuthContext.Provider value={{ user, userLoading, accessToken, loginError, login, isLogging, register, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, userLoading, accessToken, loginError, login, isLogging, register, logout, isRegistering, registerError }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

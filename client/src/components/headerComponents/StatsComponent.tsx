@@ -8,8 +8,10 @@ export const StatsComponent = () => {
   return (
     <div className="flex items-center gap-10">
       <div className="flex items-center gap-2 ">
-        <LifeIcon />
-        <p className="text-error font-medium">5</p>
+        <div className="size-5">
+          <LifeIcon />
+        </div>
+        <p className="text-error font-medium">{user?.hearts}</p>
       </div>
 
       <div className="flex items-center gap-2">

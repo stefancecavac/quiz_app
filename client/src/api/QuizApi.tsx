@@ -3,7 +3,8 @@ import { axiosInstance } from "../config/ApiClient";
 import { CreateQuizData, QuestionData, QuizData, QuizzesData, ResultData, SubmitAnswerData } from "../types";
 import { useNavigate, useParams } from "react-router";
 import { getErrorMessage } from "../util/getErrorMessage";
-import { queryClient } from "../config/QueryClient";
+import { useSetAtom } from "jotai";
+import { isRewardModalOpen } from "../atoms/rewardModalAtom";
 
 export const useGetAllQuizzes = () => {
   const getAllQuizzesApi = async () => {
@@ -95,6 +96,8 @@ export const useStartQuiz = () => {
 };
 
 export const useSubmitQuiz = () => {
+  const setRewardModal = useSetAtom(isRewardModalOpen);
+
   const submitQuizApi = async ({ answers, id }: SubmitAnswerData) => {
     const response = await axiosInstance.post(`/quizzes/submit`, { answers, id });
     return response.data as ResultData;
@@ -105,6 +108,7 @@ export const useSubmitQuiz = () => {
     mutationFn: submitQuizApi,
     onSuccess: (data) => {
       localStorage.removeItem("startQuiz");
+      setRewardModal({ currency: data.currency, trophy: data.trophy, status: data.status });
     },
   });
 

@@ -1,6 +1,7 @@
 import { useStartQuiz } from "../api/QuizApi";
 import { QuizzesData } from "../types";
 import { CurrencyIcon } from "./ui/icons/CurrencyIcon";
+import { LifeIcon } from "./ui/icons/LifeIcon";
 import { TrophyIcon } from "./ui/icons/TrophyIcon";
 
 type QuizCardProps = {
@@ -65,10 +66,10 @@ export const QuizCard = ({ quiz }: QuizCardProps) => {
         >
           <span className="flex   justify-center items-center h-full  text-white font-bold ">Start Quiz </span>
         </button>
-        <div className="text-base-content/50 font-medium  flex items-center gap-1 pl-3 mt-3">
-          - 20
+        <div className=" font-medium text-red-400  flex items-center gap-2 pl-3 mt-3">
+          <p>- 1</p>
           <div className="size-4">
-            <CurrencyIcon />
+            <LifeIcon />
           </div>
         </div>
       </div>

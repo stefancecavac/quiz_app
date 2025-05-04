@@ -5,6 +5,7 @@ export const userSchema = z.object({
   username: z.string(),
   trophy: z.number(),
   currency: z.number(),
+  hearts: z.number(),
 });
 
 export type UserData = z.infer<typeof userSchema>;
@@ -71,6 +72,19 @@ export const loginSchema = z.object({
 
 export type LoginData = z.infer<typeof loginSchema>;
 
+export const registerSchema = z.object({
+  username: z.string().min(3, { message: "username must be atleast 3 characters long" }),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .regex(/[a-z]/, "Password must contain at least one lowercase letter")
+    .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .regex(/\d/, "Password must contain at least one number")
+    .regex(/[@$!%*?&]/, "Password must contain at least one special character"),
+});
+
+export type RegisterData = z.infer<typeof registerSchema>;
+
 export const submitAnswersSchema = z.object({
   id: z.string(),
   answers: z.array(z.object({ questionId: z.string(), optionId: z.string() })),
@@ -82,6 +96,7 @@ export const resultSchema = z.object({
   trophy: z.number(),
   correct: z.array(questionSchema),
   incorrect: z.array(questionSchema),
+  status: z.enum(["PASSED", "FAILED"]),
 });
 
 export type ResultData = z.infer<typeof resultSchema>;

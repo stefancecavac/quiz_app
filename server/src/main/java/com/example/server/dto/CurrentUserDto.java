@@ -8,6 +8,7 @@ public class CurrentUserDto {
     private String username;
     private int currency;
     private int trophy;
+    private int hearts;
 
     public UUID getId() {
         return id;
@@ -41,11 +42,20 @@ public class CurrentUserDto {
         this.trophy = trophy;
     }
 
-    public CurrentUserDto(UUID id, String username, int currency, int trophy) {
+    public int getHearts() {
+        return hearts;
+    }
+
+    public void setHearts(int hearts) {
+        this.hearts = hearts;
+    }
+
+    public CurrentUserDto(UUID id, String username, int currency, int trophy, int hearts) {
         this.id = id;
         this.username = username;
         this.currency = currency;
         this.trophy = trophy;
+        this.hearts = hearts;
     }
 
 }

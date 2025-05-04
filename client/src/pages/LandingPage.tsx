@@ -18,7 +18,7 @@ export const LandingPage = () => {
           </p>
           <div className="flex flex-col items-center mt-14 gap-5 w-80 mx-auto">
             <Link
-              to={"/login"}
+              to={"/register"}
               className="py-3 w-full px-10 bg-primary hover:bg-primary/70 rounded-2xl cursor-pointer select-none
       active:translate-y-1 active:[box-shadow:0_0px_0_0_,0_0px_0_0_]
       active:border-b-[0px]
@@ -30,7 +30,7 @@ export const LandingPage = () => {
             </Link>
 
             <Link
-              to={"/create"}
+              to={"/login"}
               className="py-3 w-full px-10 bg-secondary rounded-2xl hover:bg-secondary/70 cursor-pointer select-none
       active:translate-y-1 active:[box-shadow:0_0px_0_0_,0_0px_0_0_]
       active:border-b-[0px]

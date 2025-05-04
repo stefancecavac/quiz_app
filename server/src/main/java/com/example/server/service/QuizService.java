@@ -43,7 +43,7 @@ public class QuizService {
         return quizzes.stream()
                 .map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle(), q.getDifficulty(),
                         new CurrentUserDto(q.getUser().getId(), q.getUser().getUsername(), q.getUser().getCurrency(),
-                                q.getUser().getTrophy()),
+                                q.getUser().getTrophy(), q.getUser().getHearts()),
                         q.getQuestionCount(),
                         q.getCurrencyReward(),
                         q.getTrophyReward()))
@@ -56,7 +56,7 @@ public class QuizService {
         return quizzes.stream()
                 .map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle(), q.getDifficulty(),
                         new CurrentUserDto(q.getUser().getId(), q.getUser().getUsername(), q.getUser().getCurrency(),
-                                q.getUser().getTrophy()),
+                                q.getUser().getTrophy(), q.getUser().getHearts()),
                         q.getQuestionCount(),
                         q.getCurrencyReward(),
                         q.getTrophyReward()))
@@ -132,13 +132,13 @@ public class QuizService {
         Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new IllegalArgumentException("Quiz with id: " + quizId + " not found"));
 
-        int cost = 10; // TODO make it more dynamic based on difficulty of quiz
+        int heartCost = 1; // TODO make it more dynamic based on difficulty of quiz
 
-        if (user.getCurrency() < cost) {
-            throw new IllegalArgumentException("Not enough currency to star quiz!");
+        if (user.getHearts() < heartCost) {
+            throw new IllegalArgumentException("Not enough hearts to star quiz!");
         }
 
-        user.setCurrency(user.getCurrency() - cost);
+        user.setHearts(user.getHearts() - heartCost);
         userRepository.save(user);
 
         List<QuestionDto> questions = quiz.getQuestions().stream()
@@ -191,17 +191,22 @@ public class QuizService {
                 }
             }
         }
+        String status = "";
 
         if (correctlyAnswered.size() > incorrectlyAnswered.size()) {
             user.setCurrency(user.getCurrency() + quiz.getCurrencyReward());
             user.setTrophy(user.getTrophy() + quiz.getTrophyReward());
+            user.setHearts(user.getHearts() + 1);
+            status = "PASSED";
         } else {
             user.setCurrency(Math.max(0, user.getCurrency() - quiz.getCurrencyReward()));
             user.setTrophy(Math.max(0, user.getTrophy() - quiz.getTrophyReward()));
+            status = "FAILED";
         }
         userRepository.save(user);
 
-        return new QuizResultDto(correctlyAnswered, incorrectlyAnswered, user.getCurrency(), user.getTrophy());
+        return new QuizResultDto(correctlyAnswered, incorrectlyAnswered, quiz.getCurrencyReward(),
+                quiz.getTrophyReward(), status);
     }
 
     private boolean checkAnswer(SubmitAnswerDto submittedAnswer, Question question) {

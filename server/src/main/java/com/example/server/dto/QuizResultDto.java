@@ -7,6 +7,7 @@ public class QuizResultDto {
     private List<QuestionDto> incorrect;
     private int currency;
     private int trophy;
+    private String status;
 
     public List<QuestionDto> getCorrect() {
         return correct;
@@ -43,11 +44,21 @@ public class QuizResultDto {
     public QuizResultDto() {
     }
 
-    public QuizResultDto(List<QuestionDto> correct, List<QuestionDto> incorrect, int currency, int trophy) {
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public QuizResultDto(List<QuestionDto> correct, List<QuestionDto> incorrect, int currency, int trophy,
+            String status) {
         this.correct = correct;
         this.incorrect = incorrect;
         this.currency = currency;
         this.trophy = trophy;
+        this.status = status;
     }
 
 }

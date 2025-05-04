@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { QuestionData } from "../types";
 import { useSubmitQuiz } from "../api/QuizApi";
+import { RewardModal } from "../components/modal/RewardModal";
 
 type Answer = { questionId: string; optionId: string };
 
@@ -100,6 +101,7 @@ export const StartQuizPage = () => {
           <span className="flex flex-col justify-center text-lg items-center h-full text-white font-bold ">Submit Quiz</span>
         </button>
       </div>
+      <RewardModal />
     </div>
   );
 };

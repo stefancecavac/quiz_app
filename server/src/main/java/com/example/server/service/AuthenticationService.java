@@ -107,6 +107,7 @@ public class AuthenticationService {
         newUser.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
         newUser.setCurrency(300);
         newUser.setTrophy(0);
+        newUser.setHearts(5);
 
         return userRepository.save(newUser);
     }
@@ -117,7 +118,7 @@ public class AuthenticationService {
             String username = authentication.getName();
             return userRepository.findByUsername(username)
                     .map(user -> new CurrentUserDto(user.getId(), user.getUsername(), user.getCurrency(),
-                            user.getTrophy()))
+                            user.getTrophy(), user.getHearts()))
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
         }
 

@@ -1,6 +1,7 @@
 package com.example.server.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 public class LoginRequest {
 
@@ -8,7 +9,8 @@ public class LoginRequest {
     private String username;
 
     @NotBlank(message = "Password must not be empty!")
-    private String password;
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Password must be at least 8 characters long and include uppercase, lowercase, digit, and special character")
+    private String password;;
 
     public String getUsername() {
         return username;
