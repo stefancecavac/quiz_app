@@ -1,5 +1,6 @@
 package com.example.server.dto;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CurrentUserDto {
@@ -9,6 +10,7 @@ public class CurrentUserDto {
     private int currency;
     private int trophy;
     private int hearts;
+    private LocalDateTime lastHeartUpdate;
 
     public UUID getId() {
         return id;
@@ -50,12 +52,22 @@ public class CurrentUserDto {
         this.hearts = hearts;
     }
 
-    public CurrentUserDto(UUID id, String username, int currency, int trophy, int hearts) {
+    public LocalDateTime getLastHeartUpdate() {
+        return lastHeartUpdate;
+    }
+
+    public void setLastHeartUpdate(LocalDateTime lastHeartUpdate) {
+        this.lastHeartUpdate = lastHeartUpdate;
+    }
+
+    public CurrentUserDto(UUID id, String username, int currency, int trophy, int hearts,
+            LocalDateTime lastHeartUpdate) {
         this.id = id;
         this.username = username;
         this.currency = currency;
         this.trophy = trophy;
         this.hearts = hearts;
+        this.lastHeartUpdate = lastHeartUpdate;
     }
 
 }

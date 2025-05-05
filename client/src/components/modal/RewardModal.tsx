@@ -19,24 +19,33 @@ export const RewardModal = () => {
     <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
       <div className="bg-white overflow-hidden  flex flex-col items-center rounded-lg w-96 relative border border-base-content/50">
         <div className={`${modal.status === "PASSED" ? "bg-primary" : "bg-error"}  w-full p-5 items-center flex-col justify-center flex`}>
-          <h2 className="text-3xl font-medium text-white "> {modal.status === "PASSED" ? "Congratulations" : "Bummer"}</h2>
-          <p className="text-white/80 font-medium text-sm"> {modal.status === "PASSED" ? "Collect your rewards" : "Better luck next time"}</p>
+          <h2 className="text-3xl font-medium text-white "> {modal.status === "PASSED" ? "Congratulations!" : "Bummer"}</h2>
+          <p className="text-white/80 font-medium text-sm pt-2">
+            {modal.status === "PASSED" ? "You've completed the quiz! Collect your rewards." : "Better luck next time"}
+          </p>
         </div>
-        <div className="rounded flex flex-col  p-2 my-5">
-          <div className="flex flex-col items-center gap-2">
-            <p className=" flex items-center gap-2 font-medium text-lg text-secondary">
-              {modal.status === "PASSED" ? "+" : "-"} {modal.currency}
-              <div className="size-4">
-                <CurrencyIcon />
+        <div className=" flex flex-col items-center p-2 my-3">
+          <p className="text-base-content font-medium text-xl ">Rewards earned!</p>
+          <div className="flex items-center  justify-center gap-2 pt-5 mx-auto">
+            <div className=" flex flex-col h-full  items-center  font-medium text-lg text-secondary border  rounded-lg   p-5">
+              <div className="flex items-center gap-2">
+                {modal.status === "PASSED" ? "+" : "-"} {modal.currency}
+                <div className="size-4">
+                  <CurrencyIcon />
+                </div>
               </div>
-            </p>
+              <p className="text-sm font-medium">Currency</p>
+            </div>
 
-            <p className="text-yellow-400 flex items-center gap-2 font-medium text-lg">
-              {modal.status === "PASSED" ? "+" : "-"} {modal.trophy}
-              <div className="size-5">
-                <TrophyIcon />
+            <div className="text-yellow-400 h-full  flex flex-col items-center  font-medium text-lg border  rounded-lg   p-5">
+              <div className="flex items-center gap-2">
+                {modal.status === "PASSED" ? "+" : "-"} {modal.trophy}
+                <div className="size-5">
+                  <TrophyIcon />
+                </div>
               </div>
-            </p>
+              <p className="text-sm font-medium">Trophies</p>
+            </div>
           </div>
         </div>
 

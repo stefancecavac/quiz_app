@@ -6,6 +6,7 @@ export const userSchema = z.object({
   trophy: z.number(),
   currency: z.number(),
   hearts: z.number(),
+  lastHeartUpdate: z.string(),
 });
 
 export type UserData = z.infer<typeof userSchema>;

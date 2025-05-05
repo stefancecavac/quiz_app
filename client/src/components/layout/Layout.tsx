@@ -1,6 +1,7 @@
 import React from "react";
 import { Header } from "../headerComponents/Header";
 import { Navbar } from "../navbarComponents/Navbar";
+import { ErrorModal } from "../modal/ErrorModal";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,6 +11,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <Header />
         {children}
       </div>
+      <ErrorModal />
     </div>
   );
 };

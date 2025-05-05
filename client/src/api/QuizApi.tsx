@@ -1,10 +1,12 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../config/ApiClient";
 import { CreateQuizData, QuestionData, QuizData, QuizzesData, ResultData, SubmitAnswerData } from "../types";
 import { useNavigate, useParams } from "react-router";
 import { getErrorMessage } from "../util/getErrorMessage";
 import { useSetAtom } from "jotai";
 import { isRewardModalOpen } from "../atoms/rewardModalAtom";
+import { ErrorModalAtom } from "../atoms/errorModalAtom";
+import { AxiosError } from "axios";
 
 export const useGetAllQuizzes = () => {
   const getAllQuizzesApi = async () => {
@@ -77,26 +79,36 @@ export const useMarkQuizForCompletion = () => {
 
 export const useStartQuiz = () => {
   const navigate = useNavigate();
+  const setErrorModal = useSetAtom(ErrorModalAtom);
 
   const startQuizApi = async (id: string) => {
-    const response = await axiosInstance.post(`/quizzes/start`, id);
-    return response.data as QuestionData;
+    try {
+      const response = await axiosInstance.post(`/quizzes/start`, id);
+      return response.data as QuestionData;
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message?: string }>;
+      throw new Error(axiosError.response?.data?.message || "Error fetching user");
+    }
   };
 
-  const { mutate: startQuiz, error } = useMutation({
+  const { mutate: startQuiz, isPending: quizStarting } = useMutation({
     mutationKey: ["quizzes"],
     mutationFn: startQuizApi,
     onSuccess: (data) => {
       localStorage.setItem("startQuiz", JSON.stringify(data));
       navigate(`/start`);
     },
+    onError: (error) => {
+      setErrorModal({ text: error.message });
+    },
   });
 
-  return { startQuiz };
+  return { startQuiz, quizStarting };
 };
 
 export const useSubmitQuiz = () => {
   const setRewardModal = useSetAtom(isRewardModalOpen);
+  const queryClient = useQueryClient();
 
   const submitQuizApi = async ({ answers, id }: SubmitAnswerData) => {
     const response = await axiosInstance.post(`/quizzes/submit`, { answers, id });
@@ -109,6 +121,7 @@ export const useSubmitQuiz = () => {
     onSuccess: (data) => {
       localStorage.removeItem("startQuiz");
       setRewardModal({ currency: data.currency, trophy: data.trophy, status: data.status });
+      queryClient.invalidateQueries({ queryKey: ["auth"] });
     },
   });
 

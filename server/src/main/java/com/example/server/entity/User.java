@@ -1,5 +1,6 @@
 package com.example.server.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,6 +32,8 @@ public class User {
 
     private int hearts;
 
+    private LocalDateTime lastHeartUpdate;
+
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Quiz> quizzes;
@@ -38,13 +41,15 @@ public class User {
     public User() {
     }
 
-    public User(UUID id, String username, String password, int currency, int trophy, int hearts, List<Quiz> quizzes) {
+    public User(UUID id, String username, String password, int currency, int trophy, int hearts,
+            LocalDateTime lastHeartUpdate, List<Quiz> quizzes) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.currency = currency;
         this.trophy = trophy;
         this.hearts = hearts;
+        this.lastHeartUpdate = lastHeartUpdate;
         this.quizzes = quizzes;
     }
 
@@ -102,6 +107,14 @@ public class User {
 
     public void setHearts(int hearts) {
         this.hearts = hearts;
+    }
+
+    public LocalDateTime getLastHeartUpdate() {
+        return lastHeartUpdate;
+    }
+
+    public void setLastHeartUpdate(LocalDateTime lastHeartUpdate) {
+        this.lastHeartUpdate = lastHeartUpdate;
     }
 
 }

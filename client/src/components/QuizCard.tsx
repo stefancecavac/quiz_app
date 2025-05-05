@@ -9,7 +9,7 @@ type QuizCardProps = {
 };
 
 export const QuizCard = ({ quiz }: QuizCardProps) => {
-  const { startQuiz } = useStartQuiz();
+  const { startQuiz, quizStarting } = useStartQuiz();
 
   return (
     <div
@@ -30,20 +30,20 @@ export const QuizCard = ({ quiz }: QuizCardProps) => {
       </div>
       <div className="mt-2 px-3 flex items-center justify-between   ">
         <div className="flex flex-col gap-1">
-          <p className="text-base-content/50 font-medium">Questions:</p>
-          <span className="flex font-medium text-base-content/50">{quiz.questionCount}</span>
+          <p className="text-base-content/50 font-medium text-sm">Questions:</p>
+          <span className="flex font-medium text-base-content/50">{quiz.questionCount} Total</span>
         </div>
         <div className="pl-5 flex flex-col pt-1 items-start p-1 rounded-lg ">
-          <p className="font-medium text-base-content/50 ">Rewards:</p>
-          <div className="flex items-center gap-2">
-            <p className=" flex items-center gap-2 font-medium text-lg text-secondary">
+          <p className="font-medium text-base-content/50 text-sm ">Rewards:</p>
+          <div className="flex items-center gap-4">
+            <p className=" flex items-center gap-1 font-medium text-lg text-secondary">
               + {quiz.currencyReward}
               <div className="size-4">
                 <CurrencyIcon />
               </div>
             </p>
 
-            <p className="text-yellow-400 flex items-center gap-2 font-medium text-lg">
+            <p className="text-yellow-400 flex items-center gap-1 font-medium text-lg">
               + {quiz.trophyReward}
               <div className="size-5">
                 <TrophyIcon />
@@ -55,22 +55,26 @@ export const QuizCard = ({ quiz }: QuizCardProps) => {
 
       <div className=" items-center justify-center flex flex-col  p-3 ">
         <button
+          disabled={quizStarting}
           onClick={() => startQuiz(quiz.id)}
           type="submit"
-          className="py-2 w-fit px-6 bg-secondary hover:bg-secondary/80   rounded-2xl cursor-pointer select-none
+          className="py-1 w-full px-4 bg-secondary hover:bg-secondary/80   rounded-2xl cursor-pointer select-none
       active:translate-y-1 active:[box-shadow:0_0px_0_0_,0_0px_0_0_]
       active:border-b-[0px]
       transition-all duration-110
  [box-shadow:0_5px_0_0_color-mix(in_srgb,var(--color-secondary)_80%,black),0_10px_0_0_color-mix(in_srgb,var(--color-secondary)_30%,transparent)]
       border border-base-content/20"
         >
-          <span className="flex   justify-center items-center h-full  text-white font-bold ">Start Quiz </span>
+          <span className="flex   justify-center items-center h-full  text-white font-bold ">
+            {!quizStarting ? "Start Quiz" : <span className="loading loading-spinner size-4"></span>}
+          </span>
         </button>
         <div className=" font-medium text-red-400  flex items-center gap-2 pl-3 mt-3">
-          <p>- 1</p>
           <div className="size-4">
             <LifeIcon />
           </div>
+          <p>1</p>
+          <p>Required</p>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { QuestionData } from "../types";
 import { useSubmitQuiz } from "../api/QuizApi";
@@ -20,7 +20,7 @@ export const StartQuizPage = () => {
     });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const storedQuestions = localStorage.getItem("startQuiz");
     if (storedQuestions) {
       setQuestions(JSON.parse(storedQuestions));

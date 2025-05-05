@@ -1,6 +1,8 @@
 package com.example.server.service;
 
 import java.security.Key;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Optional;
 
@@ -116,12 +118,44 @@ public class AuthenticationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.isAuthenticated()) {
             String username = authentication.getName();
-            return userRepository.findByUsername(username)
-                    .map(user -> new CurrentUserDto(user.getId(), user.getUsername(), user.getCurrency(),
-                            user.getTrophy(), user.getHearts()))
+            User user = userRepository.findByUsername(username)
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
+            regenerateHearts(user);
+
+            return new CurrentUserDto(user.getId(), user.getUsername(), user.getCurrency(), user.getTrophy(),
+                    user.getHearts(),
+                    user.getLastHeartUpdate());
+
         }
 
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "No authenticated user found");
+    }
+
+    public void regenerateHearts(User user) {
+        int maxHearts = 5;
+        int regenMinutes = 5;
+        LocalDateTime now = LocalDateTime.now();
+
+        if (user.getHearts() >= maxHearts) {
+            user.setLastHeartUpdate(now);
+            return;
+        }
+
+        LocalDateTime lastUpdate = user.getLastHeartUpdate();
+
+        if (lastUpdate == null) {
+            user.setLastHeartUpdate(now);
+            userRepository.save(user);
+            return;
+        }
+
+        long minutesPassed = ChronoUnit.MINUTES.between(lastUpdate, now);
+        int heartsToAdd = (int) (minutesPassed / regenMinutes);
+
+        if (heartsToAdd > 0) {
+            user.setHearts(Math.min(maxHearts, user.getHearts() + heartsToAdd));
+            user.setLastHeartUpdate(lastUpdate.plusMinutes(heartsToAdd * regenMinutes));
+            userRepository.save(user);
+        }
     }
 }
