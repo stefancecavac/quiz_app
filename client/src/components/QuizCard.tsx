@@ -13,7 +13,7 @@ export const QuizCard = ({ quiz }: QuizCardProps) => {
 
   return (
     <div
-      className={`rounded-lg flex flex-col overflow-auto     border border-base-content/20  hover:scale-105 transition-all  [box-shadow:0_7px_0_0_color-mix(in_srgb,var(--color-base-content)_20%,white)]`}
+      className={`rounded-lg flex flex-col overflow-auto  bg-white    border border-base-content/20  hover:scale-105 transition-all  [box-shadow:0_7px_0_0_color-mix(in_srgb,var(--color-base-content)_20%,white)]`}
     >
       <div
         className={`flex justify-between p-3 py-5

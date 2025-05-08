@@ -42,8 +42,6 @@ public class QuizService {
         List<Quiz> quizzes = quizRepository.findAll();
         return quizzes.stream()
                 .map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle(), q.getDifficulty(),
-                        new CurrentUserDto(q.getUser().getId(), q.getUser().getUsername(), q.getUser().getCurrency(),
-                                q.getUser().getTrophy(), q.getUser().getHearts(), q.getUser().getLastHeartUpdate()),
                         q.getQuestionCount(),
                         q.getCurrencyReward(),
                         q.getTrophyReward()))
@@ -55,8 +53,6 @@ public class QuizService {
         List<Quiz> quizzes = quizRepository.findByUserId(user.getId());
         return quizzes.stream()
                 .map(q -> new GetAllQuizzesDto(q.getId(), q.getTitle(), q.getDifficulty(),
-                        new CurrentUserDto(q.getUser().getId(), q.getUser().getUsername(), q.getUser().getCurrency(),
-                                q.getUser().getTrophy(), q.getUser().getHearts(), q.getUser().getLastHeartUpdate()),
                         q.getQuestionCount(),
                         q.getCurrencyReward(),
                         q.getTrophyReward()))

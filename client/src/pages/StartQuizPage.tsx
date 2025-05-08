@@ -39,13 +39,14 @@ export const StartQuizPage = () => {
   const currentQuestion = questions?.[currentQuestionIndex];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen  p-4">
-      <div className="w-full max-w-xl rounded-3xl shadow-lg overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-neutral  p-4">
+      <div className="w-full max-w-xl rounded-3xl shadow-lg overflow-hidden bg-base-100">
         <div className="bg-primary p-4 flex justify-between items-center">
-          <div className="text-white font-bold">
+          <div className="text-white font-medium p-1 px-3 rounded-2xl flex items-center gap-2 bg-black/10">
+            <p>Questions:</p>
             {currentQuestionIndex + 1}/{questions?.length}
           </div>
-        </div>{" "}
+        </div>
         <div className="p-6 md:p-8">
           <h2 className="text-3xl font-medium text-center text-base-content mb-8">{currentQuestion?.content}?</h2>
 
@@ -83,16 +84,30 @@ export const StartQuizPage = () => {
             ) : (
               <div></div>
             )}
-
-            <button
-              onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}
-              className={`px-8 py-3  hover:bg-base-content/10 hover:cursor-pointer rounded-xl font-medium text-base-content border border-base-content/20 [box-shadow:0_7px_0_0_color-mix(in_srgb,var(--color-base-content)_20%,white)]`}
-            >
-              next
-            </button>
+            {currentQuestionIndex + 1 === questions?.length ? (
+              <button
+                onClick={handleSubmitQuiz}
+                className={`px-8 py-3  rounded-2xl bg-primary hover:bg-primary/80 cursor-pointer select-none  
+      active:translate-y-1 active:[box-shadow:0_0px_0_0_,0_0px_0_0_]
+      active:border-b-[0px]
+      transition-all duration-110
+    [box-shadow:0_5px_0_0_color-mix(in_srgb,var(--color-primary)_80%,black),0_10px_0_0_color-mix(in_srgb,var(--color-primary)_30%,transparent)]
+      border-b-[0.5px] border-white/10`}
+              >
+                <span className="text-white font-medium ">Submit Quiz</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => setCurrentQuestionIndex((prev) => prev + 1)}
+                className={`px-8 py-3  hover:bg-base-content/10 hover:cursor-pointer rounded-xl font-medium text-base-content border border-base-content/20 [box-shadow:0_7px_0_0_color-mix(in_srgb,var(--color-base-content)_20%,white)]`}
+              >
+                next
+              </button>
+            )}
           </div>
         </div>
       </div>
+      <RewardModal />
     </div>
   );
 };

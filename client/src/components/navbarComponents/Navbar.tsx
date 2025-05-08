@@ -22,7 +22,7 @@ export const Navbar = () => {
         </NavLink>
 
         <NavLink
-          to="/leader-board"
+          to="/leaderboard"
           className={({ isActive }) =>
             `p-3 pl-5 flex items-center  text-base-content/70 border-2 border-base-100  gap-5 rounded-2xl text-start transition-all font-medium 
      ${isActive ? "border-secondary/30 bg-secondary/10 text-secondary" : " hover:bg-info-content/10"}`

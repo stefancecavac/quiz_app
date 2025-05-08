@@ -6,7 +6,7 @@ export const HomePage = () => {
   const { quizzes } = useGetAllQuizzes();
 
   return (
-    <div className=" grow h-full flex flex-col m-5">
+    <div className=" grow h-full flex flex-col ">
       <div className="flex items-center justify-between">
         <p className="text-base-content font-medium text-3xl">All quizzes</p>
 
