@@ -9,7 +9,7 @@ export const LeaderBoardPage = () => {
       <h2 className="text-3xl font-medium text-base-content">Top 100 users</h2>
       <div className="flex flex-col gap-3 mt-10 w-full px-10">
         {leaderBoardData?.map((leaderBard, index) => (
-          <div key={leaderBard.id} className="rounded-lg flex p-3 pr-20 items-center justify-between  overflow-auto  bg-white   ">
+          <div key={leaderBard.id} className="rounded-full  flex p-3 pr-20 items-center justify-between  overflow-auto  bg-white   ">
             <div className="flex items-center gap-5">
               <div className={`text-lg font-medium rounded-lg  flex items-center text-base-content  `}>
                 {index + 1 === 1 && (

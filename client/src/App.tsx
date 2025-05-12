@@ -10,6 +10,7 @@ import { CreateQuizLayout } from "./components/layout/CreateQuizLayout";
 import { StartQuizPage } from "./pages/StartQuizPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { LeaderBoardPage } from "./pages/LeaderBoardPage";
+import { ShopPage } from "./pages/ShopPage";
 
 function App() {
   const { user, userLoading } = UseAuthContext();
@@ -61,6 +62,19 @@ function App() {
             ) : (
               <Layout>
                 <LeaderBoardPage />
+              </Layout>
+            )
+          }
+        />
+
+        <Route
+          path="/shop"
+          element={
+            !user ? (
+              <Navigate to={"/login"} />
+            ) : (
+              <Layout>
+                <ShopPage />
               </Layout>
             )
           }

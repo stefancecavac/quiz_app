@@ -133,7 +133,7 @@ public class AuthenticationService {
 
     public void regenerateHearts(User user) {
         int maxHearts = 5;
-        int regenMinutes = 5;
+        int regenMinutes = 20;
         LocalDateTime now = LocalDateTime.now();
 
         if (user.getHearts() >= maxHearts) {

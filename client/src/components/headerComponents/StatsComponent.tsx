@@ -13,7 +13,7 @@ export const StatsComponent = () => {
   useEffect(() => {
     if (!user?.lastHeartUpdate) return;
     if (user.hearts === 5) return;
-    const regenInterval = 5 * 60 * 1000;
+    const regenInterval = 20 * 60 * 1000;
 
     const updateTimer = () => {
       const now = new Date().getTime();
