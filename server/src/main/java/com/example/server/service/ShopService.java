@@ -18,7 +18,7 @@ public class ShopService {
 
     }
 
-    public void purchaseHearts() {
+    public CurrentUserDto purchaseHearts() {
         CurrentUserDto currentUser = authenticationService.getCurrentUser();
         User user = userRepository.findById(currentUser.getId())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
@@ -35,6 +35,9 @@ public class ShopService {
         } else {
             throw new IllegalArgumentException("Not enough currency to purchase a heart");
         }
+
+        return new CurrentUserDto(user.getId(), user.getUsername(), user.getCurrency(), user.getTrophy(),
+                user.getHearts(), user.getLastHeartUpdate());
 
     }
 }

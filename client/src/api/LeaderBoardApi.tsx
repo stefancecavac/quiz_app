@@ -8,10 +8,10 @@ export const useGetLeaderboards = () => {
     return response.data as UserData[];
   };
 
-  const { data: leaderBoardData } = useQuery({
+  const { data: leaderBoardData, isPending: leaderBoardLoading } = useQuery({
     queryKey: ["leaderboard"],
     queryFn: getAllUsersForLeaderboardApi,
   });
 
-  return { leaderBoardData };
+  return { leaderBoardData, leaderBoardLoading };
 };

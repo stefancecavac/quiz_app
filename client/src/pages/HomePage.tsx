@@ -6,9 +6,9 @@ export const HomePage = () => {
   const { quizzes } = useGetAllQuizzes();
 
   return (
-    <div className=" grow h-full flex flex-col ">
+    <div className=" grow h-full flex flex-col mx-20">
       <div className="flex items-center justify-between">
-        <p className="text-base-content font-medium text-3xl">All quizzes</p>
+        <p className="text-base-content font-medium text-4xl">All quizzes</p>
 
         <Link
           to={"/create-quiz"}
@@ -23,7 +23,7 @@ export const HomePage = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-4 gap-5 mt-10">
+      <div className="grid grid-cols-3 gap-5 mt-10">
         {quizzes?.map((quiz) => (
           <QuizCard key={quiz.id} quiz={quiz} />
         ))}
